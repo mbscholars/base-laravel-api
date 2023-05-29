@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Modules\Customer\Contracts\Customer;
+use App\Http\Requests\CustomerRegisterRequest;
+use App\Modules\Customer\Models\CustomerProxy;
 
 /**
  * @httpMethod GET
@@ -17,7 +20,7 @@ class CustomerController extends Controller
      *
      * Display a listing of the resource.
      */
-    public function index(User $user, Request $request)
+    public function index(CustomerRegisterRequest $request)
     {
         echo 'index';
     }
@@ -35,9 +38,9 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user , Request $request)
+    public function show(int $customer, Request $request)
     {
-        echo 'show';
+        dd(CustomerProxy::find($customer));
     }
 
 

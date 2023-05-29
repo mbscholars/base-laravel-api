@@ -16,4 +16,8 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    //write a function that would go through all controllers and check if they have a route
+
+
 }
