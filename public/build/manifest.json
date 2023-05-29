@@ -1,0 +1,30 @@
+{
+  "resources/js/app.js": {
+    "assets": [
+      "assets/logo-2210e349.png"
+    ],
+    "dynamicImports": [
+      "resources/js/views/Home.vue"
+    ],
+    "file": "assets/app-81023741.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/assets/images/logo.png": {
+    "file": "assets/logo-2210e349.png",
+    "src": "resources/js/assets/images/logo.png"
+  },
+  "resources/js/views/Home.vue": {
+    "file": "assets/Home-147a913e.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/views/Home.vue"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-5c07ed9e.css",
+    "isEntry": true,
+    "src": "resources/sass/app.scss"
+  }
+}
