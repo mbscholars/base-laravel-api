@@ -6,7 +6,7 @@
     "dynamicImports": [
       "resources/js/views/Home.vue"
     ],
-    "file": "assets/app-81023741.js",
+    "file": "assets/app-1fc5177a.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
@@ -15,7 +15,7 @@
     "src": "resources/js/assets/images/logo.png"
   },
   "resources/js/views/Home.vue": {
-    "file": "assets/Home-147a913e.js",
+    "file": "assets/Home-5c751a78.js",
     "imports": [
       "resources/js/app.js"
     ],

@@ -36,7 +36,7 @@ pages.forEach(([path, moduleDefinition]) => {
 
      routes.push(route)
 })
-console.log(routes);
+console.log(import.meta.env.BASE_URL);
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
