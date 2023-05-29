@@ -4,7 +4,9 @@ import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue';
 
-const routes = [];
+const routes = [
+    {name: 'home', path: '/', component: () => import('./views/Home.vue')},
+];
 
 const pages = Object.entries(import.meta.globEager(`./views/dashboard/**/**/**/*.vue`)); /** */
 
@@ -34,7 +36,7 @@ pages.forEach(([path, moduleDefinition]) => {
 
      routes.push(route)
 })
-
+console.log(routes);
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
