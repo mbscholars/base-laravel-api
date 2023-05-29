@@ -1,9 +1,13 @@
 <?php
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\HomeController;
+
+
 
 
 
 initializeRoutes('Http/Controllers');
 //
 
-Route::get('/{customer}', [CustomerController::class, 'show']);
+Route::fallback([HomeController::class, 'index']);
+
+

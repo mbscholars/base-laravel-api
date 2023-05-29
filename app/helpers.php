@@ -201,8 +201,7 @@ function getHttpMethod($class, $method) : array
     if($methods != null and array_intersect($methods, array_unique(array_values($httpVerbs)))){
         return  $methods;
     }
-
-    return [$httpVerbs[$method]];
+    return  [ ($httpVerbs[$method])  ?? 'GET' ];
 }
 
 
