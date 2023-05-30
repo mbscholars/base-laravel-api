@@ -1,0 +1,1 @@
+import{_ as e}from"./app-2fdb73d1.js";const o={name:"Home",meta:{permission:"client.read",redirectIfLoggedIn:!1}};function t(r,n,s,a,c,m){return" Welcome to the home page "}const _=e(o,[["render",t]]);export{_ as default};
