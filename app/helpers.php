@@ -1,11 +1,21 @@
 <?php
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Permission;
 
+function getClassFromFilePath($filePath)
+{
+    $appPath = app_path();
+    $relativePath = "App" . Str::after($filePath, $appPath);
+    $namespace = Str::replace('/', '\\', Str::beforeLast($relativePath, '.php'));
+    $className = Str::studly($namespace);
+
+    return $className;
 
 
+}
 function initializeRoutes(string $path){
     $classes = getControllerMethods($path);
     // dd($classes);
@@ -55,9 +65,8 @@ function getControllerMethods(string $path = 'Http/Controllers')
         if($file->getFileinfo()->getFilename() == 'Controller.php'){
             continue;
         }
-
-        $relativePath = str_replace([$controllersPath . '/', '.php'], ['',''], $filePath);
-        $className = 'App\\Http\\Controllers\\' . str_replace('/', '\\', $relativePath);
+        // dd($filePath);
+        $className =   (getClassFromFilePath($filePath));
 
         $reflectionClass = new ReflectionClass($className);
 
@@ -70,9 +79,10 @@ function getControllerMethods(string $path = 'Http/Controllers')
                     $controllerMethods[] = $method->name;
                 }
             }
+            $root_path = (explode('/',"App/" . $path));
 
             $controllerClasses[$className]['methods'] = $controllerMethods;
-            $controllerClasses[$className]['prefix'] =  str_replace('\\','',(strtolower(str_replace("App\Http\Controllers",'', $reflectionClass->getNamespaceName()))));
+            $controllerClasses[$className]['prefix'] =  str_replace('\\','',(strtolower(str_replace($root_path, "", $reflectionClass->getNamespaceName()))));
 
         }
     }

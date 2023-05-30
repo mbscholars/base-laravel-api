@@ -5,6 +5,7 @@ import BaseInput from '../../components/BaseInput.vue';
 import logoImage from '../../assets/images/logo.png';
 import BaseButton from '../../components/BaseButton.vue';
 import userLogin from '@/composables/useApi.js'
+import { User } from '@/stores/user.js'
 export default {
     setup(props, context) {
         const email = ref(null);
@@ -13,7 +14,9 @@ export default {
         const { data, loading, error, login } = userLogin();
         const submit = function () {
               login(email.value, password.value);
-
+            if(data.user){
+                User.login(data)
+            }
         };
         return {
             email,
@@ -31,7 +34,8 @@ export default {
         layout: 'blank',
         permission: 'auth.read',
         redirectIfLoggedIn: true,
-    }
+    },
+
 }
 </script>
 <template>
@@ -47,8 +51,11 @@ export default {
             <a href="#" class="font-semibold text-primary-600 hover:text-primary-500">Start a 14 day free trial</a>
           </p>
         </div>
+        <div class="error-note mt-10" v-if="error">
+                        {{ error }}
+                    </div>
+        <div class="mt-8">
 
-        <div class="mt-10"> {{  error }}
           <div class="space-y-6">
              <BaseInput
                 label="Email address"
@@ -77,6 +84,7 @@ export default {
 
 
               <div class="flex items-right justify-end">
+
                 <div class="text-sm leading-6">
                   <router-link :to="{name: 'password-recover'}" class="font-semibold text-primary-600 hover:text-primary-500">Forgot password?</router-link>
                 </div>
