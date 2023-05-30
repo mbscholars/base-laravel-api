@@ -2,7 +2,7 @@ name: Build and Deploy Live
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   deploy:
@@ -31,4 +31,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         source: .
-        target: /var/www/dialogflux
+        target: /home/ocitzpia/ocity
