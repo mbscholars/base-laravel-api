@@ -16,7 +16,11 @@ export default {
 
         };
     },
-    components: { BaseInput, BaseButton }
+    components: { BaseInput, BaseButton },
+    meta: {
+        permission: 'auth.read',
+        redirectIfLoggedIn: false,
+    }
 }
 </script>
 <template>

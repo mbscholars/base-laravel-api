@@ -12,11 +12,17 @@ export default {
         const submit = function () {
             alert("login");
         };
+
         return {
             email,
             password,
             submit
         };
+    },
+
+    meta: {
+        permission: 'auth.read',
+        redirectIfLoggedIn: false,
     },
     components: { BaseInput, BaseButton, ChevronLeftIcon }
 }
