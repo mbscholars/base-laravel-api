@@ -1,11 +1,15 @@
 import './bootstrap';
 import { createApp } from 'vue';
-
+import { createPinia } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue';
+import { User } from './stores/user';
+
+
+const pinia = createPinia();
 
 const routes = [
-    {name: 'home', path: '/', component: () => import('./views/Home.vue')},
+    {name: 'index', path: '/', component: () => import('./views/Home.vue')},
 ];
 
 const pages = Object.entries(import.meta.globEager(`./views/dashboard/**/**/**/*.vue`)); /** */
@@ -31,38 +35,37 @@ pages.forEach(([path, moduleDefinition]) => {
             .replace(/\/{2,}/g, "/")
             .replace(/\/$/, '')
             .toLowerCase(),
+      meta: moduleDefinition.default?.meta
      }
-
 
      routes.push(route)
 })
 
+// console.log(routes)
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
 
+
+router.beforeEach(to => {
+    const user = User();
+    const isLoggedIn = user.isLogged;
+
+
+if (user.canNavigate(to)) {
+    if (to.meta.redirectIfLoggedIn && isLoggedIn)
+      return '/'
+  }
+  else {
+    if (isLoggedIn)
+      return { name: 'not-authorized' }
+    else
+      return { name: 'login', query: { to: to.name !== 'index' ? to.fullPath : undefined } }
+  }
+})
+
 const app = createApp(App);
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
-//     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
-// });
-
-/**
- * Finally, we will attach the application instance to a HTML element with
- * an "id" attribute of "app". This element is included with the "auth"
- * scaffolding. Otherwise, you will need to add an element yourself.
- */
-
-app.use(router).mount('#app');
+app.use(pinia).use(router).mount('#app');

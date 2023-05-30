@@ -1,23 +1,37 @@
 <script>
 //vue3 boilerplate
-import { ref } from 'vue'
+import { ref,reactive } from 'vue'
 import BaseInput from '../../components/BaseInput.vue';
 import logoImage from '../../assets/images/logo.png';
 import BaseButton from '../../components/BaseButton.vue';
+import userLogin from '@/composables/useApi.js'
 export default {
     setup(props, context) {
         const email = ref(null);
         const password = ref(null);
-        const login = function () {
-            alert("login");
+        const errors = ref({})
+        const { data, loading, error, login } = userLogin();
+        const submit = function () {
+              login(email.value, password.value);
+
         };
         return {
             email,
+            errors,
+            loading,
+            data,
+            error,
             password,
-            login
+            login,
+            submit
         };
     },
-    components: { BaseInput, BaseButton }
+    components: { BaseInput, BaseButton },
+    meta: {
+        layout: 'blank',
+        permission: 'auth.read',
+        redirectIfLoggedIn: true,
+    }
 }
 </script>
 <template>
@@ -34,7 +48,7 @@ export default {
           </p>
         </div>
 
-        <div class="mt-10"> {{ email }}
+        <div class="mt-10"> {{  error }}
           <div class="space-y-6">
              <BaseInput
                 label="Email address"
@@ -63,18 +77,16 @@ export default {
 
 
               <div class="flex items-right justify-end">
-
-
                 <div class="text-sm leading-6">
-                  <router-link :to="{name: 'password-reset'}" class="font-semibold text-primary-600 hover:text-primary-500">Forgot password?</router-link>
+                  <router-link :to="{name: 'password-recover'}" class="font-semibold text-primary-600 hover:text-primary-500">Forgot password?</router-link>
                 </div>
               </div>
-
               <div>
                 <BaseButton
                   action="Sign in"
                   type="submit"
-                  @submit="login"
+                  :disabled="!email || !password || loading"
+                  @submit="submit"
                   />
               </div>
 

@@ -23,5 +23,6 @@ props: {
         'cursor-wait': loading
     }
     "
+    :disabled="disabled"
     class="button"> {{ action }}</button>
 </template>

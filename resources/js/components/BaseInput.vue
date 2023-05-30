@@ -33,7 +33,15 @@ export default{
 
     setup(props) {
 
+        const hasError = function(name){
+            if (props.error[name]) {
+                return true;
+            }
+        }
 
+        return {
+            hasError
+        }
     },
 
 }
@@ -71,7 +79,7 @@ export default{
 
 				<label class="floating-label">{{ label  }}</label>
                 <div class="mB-2 form-group">
-                    <span class="text-red-500 text-xs italic" v-if="error">{{ error }}</span>
+                    <span class="text-red-500 text-xs italic" v-if="hasError(name)">{{ error }}</span>
                 </div>
 			</div>
 
